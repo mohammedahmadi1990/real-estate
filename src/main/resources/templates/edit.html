@@ -1,0 +1,82 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit Listing | RealEstate</title>
+
+    <link
+            rel="stylesheet"
+            href="https://bootswatch.com/5/quartz/bootstrap.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<header>
+    <br>
+    <div style="padding-left: 80px" sec:authorize="isAuthenticated()">
+        <h1>Edit Listing</h1>
+        <a th:href="@{/home}" th:alt="Dashboard">Dashboard</a>
+    </div>
+</header>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="card border-success" style="max-width: 70rem; margin-right: auto;margin-left: auto;">
+        <div class="card-header" style="text-align: center;font-size: 18px">New Listing</div>
+        <div class="card-body">
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully requested fuel quote!</div>
+            </div>
+
+            <form th:action="@{'/listings/'+${id}+'/edit'}" method="post" th:object="${estate}">
+
+                <div class="form-group">
+                    <label class="control-label" for="address"> Address </label> <input
+                        id="address" class="form-control"
+                        required th:field="*{address}" autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="price"> Price </label> <input
+                        id="price" class="form-control"
+                        th:field="*{price}" type="number" min="0"
+                        autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="listedDate"> Listed Date </label> <input
+                        id="listedDate" class="form-control"
+                        th:field="*{listedDate}" type="date"
+                        autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <div class="row" style=" width: 100%;text-align: center;">
+                        <div class="col-sm-12" style="display: inline-block;">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
+<br>
+<br>
+</body>
+</html>

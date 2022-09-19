@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Home | RealEstate</title>
+    <link
+            rel="stylesheet"
+            href="https://bootswatch.com/5/quartz/bootstrap.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<header>
+    <br>
+
+    <div style="padding-left: 80px" sec:authorize="isAuthenticated()">
+        <h1>Welcome, <span th:text="${name}"></span></h1>
+        <a th:href="@{/logout}" th:alt="Logout">log out</a>
+    </div>
+</header>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="card border-success" style="max-width: 70rem; margin-right: auto;margin-left: auto;">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Address</th>
+                    <th scope="col">Listed On</th>
+                    <th scope="col">Added By</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr scope="row" th:each="estate : ${estateList}">
+                    <td><a th:href="@{'/listings/'+${estate.getId()}}" th:id="${estate.getId()}" th:text="${estate.getAddress()}"></a></td>
+                    <td th:text="${estate.getListedDate()}">Listed On</td>
+                    <td th:text="${estate.getUser().userName}">Added By</td>
+                    <td th:text="'&#36;'+'&nbsp;' + ${estate.getPrice()}">Price</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div class="form-group">
+        <div class="row" style=" width: 100%;text-align: center;">
+            <div class="col-sm-12" style="display: inline-block;">
+                <form th:action="@{/listings/new}" method="get">
+                    <input class="btn btn-primary" type="submit" value="Add Listing">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
